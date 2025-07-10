@@ -1,32 +1,50 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
+using Repositories.Implementations;
 
 namespace Services.Implementations;
 
-public class EmployeeService : IEmployeeService
+public class EmployeeService(EmployeeRepository employeeRepository) : IEmployeeService
 {
-    public Task<Employee> GetEmployeeByIdAsync(Guid id)
+    public async Task<Employee> GetEmployeeByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var employee = await employeeRepository.GetEmployeeById(id);
+        if (employee == null)
+        {
+            throw new NotFoundException("Employee with id:" + id + " not found.");
+        }
+
+        return employee;
     }
 
-    public Task<IEnumerable<Employee>> GetAllAsync()
+    public async Task<IEnumerable<Employee>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var employees = await employeeRepository.GetAllEmployees();
+        return employees ?? [];
     }
 
-    public Task<Employee> CreateEmployeeAsync(Employee employee)
+    public async Task CreateEmployeeAsync(Employee employee)
     {
-        throw new NotImplementedException();
+        if (!await employeeRepository.CreateAsync(employee))
+        {
+            throw new CrudException("Employee creation failed.");
+        }
     }
 
-    public Task UpdateEmployeeAsync(Employee employee)
+    public async Task UpdateEmployeeAsync(Employee employee)
     {
-        throw new NotImplementedException();
+        if (!await employeeRepository.UpdateAsync(employee))
+        {
+            throw new CrudException("Employee update failed.");
+        }
     }
 
-    public Task DeleteEmployeeAsync(Guid id)
+    public async Task DeleteEmployeeAsync(Guid id)
     {
-        throw new NotImplementedException();
+        if (!await employeeRepository.DeleteAsync(id))
+        {
+            throw new CrudException("Employee deletion failed.");
+        }
     }
 }

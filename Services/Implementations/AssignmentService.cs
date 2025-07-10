@@ -1,18 +1,27 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
+using Repositories.Implementations;
 
 namespace Services.Implementations;
 
-public class AssignmentService : IAssignmentService
+public class AssignmentService(AssignmentRepository assignmentRepository) : IAssignmentService
 {
-    public Task<Assignment> GetAssignmentByIdAsync(Guid id)
+    public async Task<Assignment> GetAssignmentByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var assignment = await assignmentRepository.GetAssignmentById(id);
+        if (assignment == null)
+        {
+            throw new CrudException("Assignment with id:" + id + " not found.");
+        }
+
+        return assignment;
     }
 
-    public Task<IEnumerable<Assignment>> GetAllAsync()
+    public async Task<IEnumerable<Assignment>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var assignments = await assignmentRepository.GetAllAssignment();
+        return assignments ?? [];
     }
 
     public Task<Assignment> CreateAssignmentAsync(Assignment assignment)
