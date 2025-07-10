@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Enums;
 
 namespace Domain.Entities;
 
@@ -9,7 +10,7 @@ public class Project
     [Required] public string Description { get; set; } = "";
     [Required] public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly EndDate { get; set; }
-    [Required] public required string Status { get; set; }
+    [Required] public required Status Status { get; set; }
     public EmployeesProjects? EmployeesProjects { get; set; }
 
     public Project()
