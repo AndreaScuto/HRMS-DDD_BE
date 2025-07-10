@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class EmployeesProjects // N-N Relation
+public class Assignment // N-N Relation
 {
     [Key] public Guid EmployeeId { get; set; }
     [Required] public required Employee Employee { get; set; }
@@ -11,7 +11,7 @@ public class EmployeesProjects // N-N Relation
     [Required] public decimal PercentageOfWork { get; set; }
     [Required] public decimal HoursOfWork { get; set; }
 
-    public EmployeesProjects()
+    public Assignment()
     {
     }
 }

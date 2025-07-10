@@ -12,7 +12,7 @@ public class Employee
     [Required] public required string Department { get; set; }
     [Required] public required Role Role { get; set; }
     [Required] public decimal Salary { get; set; } = 0;
-    public EmployeesProjects? EmployeesProjects { get; set; }
+    public Assignment[]? Assignments { get; set; }
 
     public Employee()
     {

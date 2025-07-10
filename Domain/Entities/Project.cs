@@ -11,7 +11,7 @@ public class Project
     [Required] public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     public DateOnly EndDate { get; set; }
     [Required] public required Status Status { get; set; }
-    public EmployeesProjects? EmployeesProjects { get; set; }
+    public Assignment[]? Assignments { get; set; }
 
     public Project()
     {
